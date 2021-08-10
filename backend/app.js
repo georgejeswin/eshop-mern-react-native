@@ -6,6 +6,7 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import productsRouter from "./routes/products.js";
 import categoryRouter from "./routes/category.js";
+import userRouter from "./routes/users.js";
 
 dotenv.config({ path: ".env" });
 
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use(morgan("tiny"));
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/category`, categoryRouter);
+app.use(`${api}/users`, userRouter);
 
 mongoose
   .connect(process.env.CONNECTION_STRING, {
