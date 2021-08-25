@@ -7,6 +7,9 @@ import mongoose from "mongoose";
 import productsRouter from "./routes/products.js";
 import categoryRouter from "./routes/category.js";
 import userRouter from "./routes/users.js";
+import authJwt from "./helpers/jwt.js";
+import errorHandler from "./helpers/errorHandler.js";
+import orderRouter from "./routes/orders.js";
 
 dotenv.config({ path: ".env" });
 
@@ -19,9 +22,13 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
+app.use(authJwt());
+app.use(errorHandler);
+
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/category`, categoryRouter);
 app.use(`${api}/users`, userRouter);
+app.use(`${api}/orders`, orderRouter);
 
 mongoose
   .connect(process.env.CONNECTION_STRING, {
