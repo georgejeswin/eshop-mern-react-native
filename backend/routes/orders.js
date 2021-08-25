@@ -49,6 +49,19 @@ router.post("/", async (req, res) => {
     );
     const orderItemsIdsResolved = await orderItemIds;
 
+    const totalPrices = await Promise.all(
+      orderItemsIdsResolved.map(async (orderItemId) => {
+        const orderItem = await OrderItem.findById(orderItemId).populate(
+          "product",
+          "price"
+        );
+        const totalPrice = orderItem.product.price * orderItem.quantity;
+        return totalPrice;
+      })
+    );
+    const totalPrice = totalPrices.reduce((a, b) => a + b, 0);
+    console.log(totalPrice);
+
     let order = new Order({
       orderItems: orderItemsIdsResolved,
       shippingAddress1: req.body.shippingAddress1,
@@ -58,7 +71,7 @@ router.post("/", async (req, res) => {
       country: req.body.country,
       phone: req.body.phone,
       status: req.body.status,
-      totalPrice: req.body.totalPrice,
+      totalPrice: totalPrice,
       user: req.body.user,
     });
     order = await order.save();
@@ -85,7 +98,28 @@ router.put("/:id", async (req, res) => {
     if (!order) res.status(400).send("Order cannot be updated");
     return res.status(200).send(order);
   } catch (error) {
-    res.status(400).json({ error: error });
+    res.status(405).json({ error: error });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    Order.findByIdAndRemove(req.params.id).then(async (order) => {
+      if (order) {
+        await order.orderItems.map(async (orderItem) => {
+          await orderItem.findByIdAndRemove(orderItem);
+        });
+        return res
+          .status(200)
+          .json({ success: true, message: "order is deleted" });
+      } else {
+        return res
+          .status(404)
+          .json({ success: false, message: "order cannot be deleted" });
+      }
+    });
+  } catch (error) {
+    res.status(405).json({ error: error });
   }
 });
 
