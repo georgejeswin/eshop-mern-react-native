@@ -10,6 +10,11 @@ import userRouter from "./routes/users.js";
 import authJwt from "./helpers/jwt.js";
 import errorHandler from "./helpers/errorHandler.js";
 import orderRouter from "./routes/orders.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 dotenv.config({ path: ".env" });
 
@@ -29,6 +34,7 @@ app.use(`${api}/products`, productsRouter);
 app.use(`${api}/category`, categoryRouter);
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/orders`, orderRouter);
+app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
 mongoose
   .connect(process.env.CONNECTION_STRING, {

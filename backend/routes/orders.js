@@ -123,4 +123,50 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.get("/get/totalsales", async (req, res) => {
+  try {
+    const totalSales = await Order.aggregate([
+      { $group: { _id: null, totalSales: { $sum: "$totalPrice" } } },
+    ]);
+    if (!totalSales)
+      res.status(400).send("the order sales cannot be generated");
+    res.status(200).send({ totalsales: totalSales.pop().totalSales });
+  } catch (error) {
+    res.status(400).json({ error: error });
+  }
+});
+
+router.get("/get/count", async (req, res) => {
+  try {
+    const OrderCount = await Order.countDocuments((count) => count);
+    if (!OrderCount) {
+      res.status(404).send("no orders");
+    }
+    res.status(200).json({
+      OrderCount,
+    });
+  } catch (error) {
+    res.status(404).json({
+      error: error.message,
+    });
+  }
+});
+
+router.get("/get/userorders/:userid", async (req, res) => {
+  try {
+    const userOrderList = await Order.find({ user: req.params.userid })
+      .populate({
+        path: "orderItems",
+        populate: { path: "product", populate: "category" },
+      })
+      .sort({ dateOrdered: -1 });
+    if (!userOrderList) return res.status(404).json({ success: false });
+    res.status(200).send(userOrderList);
+  } catch (error) {
+    res.status(404).json({
+      error: error.message,
+    });
+  }
+});
+
 export default router;

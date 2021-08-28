@@ -1,7 +1,32 @@
 import express from "express";
 import Category from "../models/categoryModel.js";
 import ProductModel from "../models/productModel.js";
+import multer from "multer";
+import mongoose from "mongoose";
+
 const router = express.Router();
+
+const FILE_TYPE_MAP = {
+  "image/png": "png",
+  "image/jpeg": "jpeg",
+  "image/jpg": "jpg",
+};
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const isValid = FILE_TYPE_MAP[file.mimetype];
+    let uploadErr = new Error("Invalid image type");
+    if (isValid) uploadErr = null;
+    cb(uploadErr, "public/uploads");
+  },
+  filename: function (req, file, cb) {
+    const fileName = file.originalname.split(" ").join("-");
+    const extenstion = FILE_TYPE_MAP[file.mimetype];
+    cb(null, `${fileName}-${Date.now()}.${extenstion}`);
+  },
+});
+
+const uploadOptions = multer({ storage: storage });
 
 router.get("/", async (req, res) => {
   try {
@@ -33,33 +58,35 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", uploadOptions.single("image"), async (req, res) => {
   try {
     const category = await Category.findById(req.body.category);
     if (!category) return res.status(400).send("Invalid category");
-    else {
-      let product = new ProductModel({
-        name: req.body.name,
-        description: req.body.description,
-        richDescription: req.body.richDescription,
-        image: req.body.image,
-        images: req.body.images,
-        brand: req.body.images,
-        price: req.body.price,
-        category: req.body.category,
-        countInStock: req.body.countInStock,
-        rating: req.body.rating,
-        numReviews: req.body.numReviews,
-        isFeatured: req.body.isFeatured,
-        dateCreated: req.body.dateCreated,
-      });
+    const file = req.file;
+    if (!file) return res.status(400).send("No image in the request ");
+    const fileName = req.file.filename;
+    const basepath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+    let product = new ProductModel({
+      name: req.body.name,
+      description: req.body.description,
+      richDescription: req.body.richDescription,
+      image: `${basepath}${fileName}`,
+      images: req.body.images,
+      brand: req.body.images,
+      price: req.body.price,
+      category: req.body.category,
+      countInStock: req.body.countInStock,
+      rating: req.body.rating,
+      numReviews: req.body.numReviews,
+      isFeatured: req.body.isFeatured,
+      dateCreated: req.body.dateCreated,
+    });
 
-      product = await product.save();
-      if (!product) {
-        return res.status(500).send("The product cannot be saved");
-      }
-      res.status(201).send(product);
+    product = await product.save();
+    if (!product) {
+      return res.status(500).send("The product cannot be saved");
     }
+    res.status(201).send(product);
   } catch (error) {
     res.status(500).json({
       error: error.message,
@@ -155,5 +182,40 @@ router.get("/get/featured/:count", async (req, res) => {
     });
   }
 });
+
+router.put(
+  "/gallery-images/:id",
+  uploadOptions.array("images", 10),
+  async (req, res) => {
+    try {
+      if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).send("Invalid product id");
+      }
+      const category = await Category.findById(req.body.category);
+      if (!category) return res.status(400).send("Invalid category");
+      let imagesPaths = [];
+      const basepath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+      const files = req.files;
+      if (files) {
+        files.map((file) => {
+          imagesPaths.push(`${basepath}${file.filename}`);
+        });
+      }
+      const product = await ProductModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          images: imagesPaths,
+        },
+        { new: true }
+      );
+      if (!product) {
+        return res.status(500).send("Cannot update");
+      }
+      res.status(201).send(product);
+    } catch (error) {
+      res.status(400).json({ error: error });
+    }
+  }
+);
 
 export default router;
