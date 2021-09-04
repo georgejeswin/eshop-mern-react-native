@@ -23,6 +23,7 @@ const SingleProduct = (props) => {
   const [availabilityText, setAvailabilityText] = useState("");
 
   useEffect(() => {
+    console.log(item.image);
     if (props.route.params.item.countInStock == 0) {
       setAvailability(<TrafficLight unavailable></TrafficLight>);
       setAvailabilityText("Unavailable");
@@ -66,6 +67,7 @@ const SingleProduct = (props) => {
             {availability}
           </View>
           <Text>{item.description}</Text>
+          {/* <Text>{item.image}</Text> */}
         </View>
       </ScrollView>
       <View style={styles.bottomContainer}>

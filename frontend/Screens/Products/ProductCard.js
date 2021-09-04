@@ -18,7 +18,7 @@ import { hostIP } from "../../assets/common/baseUrl";
 var { width } = Dimensions.get("window");
 const ProductCard = (props) => {
   const { name, price, image, countInStock } = props;
-  console.log("image", `${hostIP}${image}`);
+  console.log(image);
   return (
     <View style={styles.container}>
       <Image

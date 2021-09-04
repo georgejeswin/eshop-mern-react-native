@@ -35,9 +35,6 @@ const Orders = (props) => {
         )}
         keyExtractor={(item) => item.id}
       />
-      {orderList.map((order) => {
-        <Text>Helloo{order.id}</Text>;
-      })}
     </View>
   );
 };

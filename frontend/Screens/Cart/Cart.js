@@ -19,12 +19,8 @@ const Cart = (props) => {
 
   var total = 0;
   props.cartItems.forEach((cart) => {
-    return (total += cart.product.price);
+    total += parseInt(cart.product.price);
   });
-
-  
-
-
 
   return (
     <>
@@ -58,7 +54,6 @@ const Cart = (props) => {
               <Text style={styles.price}>₹{total}</Text>
             </Left>
             <Right>
-              
               <EasyButton
                 medium
                 danger
@@ -70,28 +65,31 @@ const Cart = (props) => {
               </EasyButton>
             </Right>
             <Right>
-            {context.stateUser.isAuthenticated?(<EasyButton
-                medium
-                primary
-                onPress={() => {
-                  props.navigation.navigate("Checkout");
-                }}
-              >
-                <Text style={{ color: "#FFF", fontWeight: "bold" }}>
-                  Checkout
-                </Text>
-              </EasyButton>):<EasyButton
-                medium
-                secondary
-                onPress={() => {
-                  props.navigation.navigate("Login");
-                }}
-              >
-                <Text style={{ color: "#FFF", fontWeight: "bold" }}>
-                  Login
-                </Text>
-              </EasyButton>}
-              
+              {context.stateUser.isAuthenticated ? (
+                <EasyButton
+                  medium
+                  primary
+                  onPress={() => {
+                    props.navigation.navigate("Checkout");
+                  }}
+                >
+                  <Text style={{ color: "#FFF", fontWeight: "bold" }}>
+                    Checkout
+                  </Text>
+                </EasyButton>
+              ) : (
+                <EasyButton
+                  medium
+                  secondary
+                  onPress={() => {
+                    props.navigation.navigate("Login");
+                  }}
+                >
+                  <Text style={{ color: "#FFF", fontWeight: "bold" }}>
+                    Login
+                  </Text>
+                </EasyButton>
+              )}
             </Right>
           </View>
         </Container>

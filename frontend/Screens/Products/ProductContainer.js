@@ -30,19 +30,12 @@ const ProductContainer = (props) => {
   const [active, setActive] = useState();
   const [initialState, setInitialState] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [todos, setTodos] = useState([]);
 
   useFocusEffect(
     useCallback(() => {
       setFocus(false);
 
       setActive(-1);
-      axios.get("https://jsonplaceholder.typicode.com/todos/").then((res) => {
-        setTodos(res.data);
-      });
-      // .then((json) => {
-      //   setTodos(json);
-      // });
 
       //Products
       axios

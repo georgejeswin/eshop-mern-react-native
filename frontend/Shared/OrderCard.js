@@ -17,7 +17,7 @@ const codes = [
 
 const OrderCard = (props) => {
   const [orderStatus, setOrderStatus] = useState();
-  const [statusText, setStatusText] = useState();
+  const [statusText, setStatusText] = useState("pending");
   const [statusChange, setStatusChange] = useState();
   const [token, setToken] = useState();
   const [cardColor, setCardColor] = useState();
@@ -100,7 +100,7 @@ const OrderCard = (props) => {
   return (
     <View style={[styles.container, { backgroundColor: cardColor }]}>
       <View style={styles.container}>
-        <Text style={styles.textColor} >Order Number #{props.id}</Text>
+        <Text style={styles.textColor}>Order Number #{props.id}</Text>
       </View>
       <View style={{ marginTop: 10 }}>
         <Text style={styles.textColor}>
@@ -111,7 +111,9 @@ const OrderCard = (props) => {
         </Text>
         <Text style={styles.textColor}>City: {props.city}</Text>
         <Text style={styles.textColor}>Country: {props.country}</Text>
-        <Text style={styles.textColor}>Data Order: {props.dateOrdered.split("T")[0]}</Text>
+        <Text style={styles.textColor}>
+          Data Order: {props.dateOrdered.split("T")[0]}
+        </Text>
 
         <View style={styles.priceContainer}>
           <Text>Price: </Text>
@@ -157,8 +159,8 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
-  textColor:{
-    color:'#FFF'
-  }
+  textColor: {
+    color: "#FFF",
+  },
 });
 export default OrderCard;

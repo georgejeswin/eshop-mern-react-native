@@ -33,7 +33,7 @@ const paymentCards = [
 const Payment = (props) => {
   const order = props.route.params;
 
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(1);
   const [card, setCard] = useState();
 
   const paymentConfirm = () => {
