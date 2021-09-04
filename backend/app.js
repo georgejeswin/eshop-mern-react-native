@@ -31,10 +31,13 @@ app.use(authJwt());
 app.use(errorHandler);
 
 app.use(`${api}/products`, productsRouter);
-app.use(`${api}/category`, categoryRouter);
+app.use(`${api}/categories`, categoryRouter);
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/orders`, orderRouter);
 app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
+app.get("/", (req, res) => {
+  res.send("Eshop backend");
+});
 
 mongoose
   .connect(process.env.CONNECTION_STRING, {
@@ -49,6 +52,8 @@ mongoose
     console.log(err);
   });
 
-app.listen(5000, () => {
-  console.log("server running on port 5000");
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
