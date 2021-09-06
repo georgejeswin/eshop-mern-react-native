@@ -1,14 +1,6 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import {
-  Content,
-  Left,
-  Body,
-  ListItem,
-  Thumbnail,
-  Text,
-  Container,
-} from "native-base";
+import { View, StyleSheet, Dimensions, Image } from "react-native";
+import { Content, Left, Body, ListItem, Text } from "native-base";
 
 var { width } = Dimensions.get("window");
 import { hostIP } from "../../assets/common/baseUrl";
@@ -27,12 +19,11 @@ const SearchedProduct = (props) => {
             avatar
           >
             <Left>
-              <Thumbnail
+              <Image
                 source={{
-                  uri: item.image
-                    ? `${hostIP}${item.image}`
-                    : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png",
+                  uri: item.image,
                 }}
+                style={{ width: 50, height: 50, padding: 20 }}
               />
             </Left>
             <Body>

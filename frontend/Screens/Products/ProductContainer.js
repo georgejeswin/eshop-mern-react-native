@@ -102,8 +102,13 @@ const ProductContainer = (props) => {
     <>
       {loading == false ? (
         <Container>
-          <Header searchBar rounded style={{ backgroundColor: "gainsboro" }}>
-            <Item>
+          <Header
+            searchBar
+            style={{ backgroundColor: "gainsboro", height: 80 }}
+          >
+            <Item
+              style={{ borderRadius: 20, padding: 10, paddingVertical: 28 }}
+            >
               <Icon name="ios-search" />
               <Input
                 placeholder="Search"
@@ -175,7 +180,7 @@ const ProductContainer = (props) => {
 const style = StyleSheet.create({
   container: {
     flexWrap: "wrap",
-    backgroundColor: "gainsboro",
+    // backgroundColor: "black",
   },
   listContainer: {
     height: height + 1000,
@@ -183,7 +188,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     flexWrap: "wrap",
-    backgroundColor: "gainsboro",
+    // backgroundColor: "black",
   },
   center: {
     justifyContent: "center",

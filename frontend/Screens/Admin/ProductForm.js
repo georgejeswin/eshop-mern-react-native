@@ -22,6 +22,7 @@ import axios from "axios";
 import Dropdown from "../../Components/Dropdown";
 import * as ImagePicker from "expo-image-picker";
 import mime from "mime";
+import { ScrollView } from "react-native-gesture-handler";
 //import { Picker } from "@react-native-picker/picker";
 var { height } = Dimensions.get("window");
 
@@ -99,7 +100,7 @@ const ProductForm = (props) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 5],
+      aspect: [1, 1],
       quality: 1,
     });
     if (!result.cancelled) {
@@ -203,88 +204,90 @@ const ProductForm = (props) => {
   };
 
   return (
-    <FormContainer title="Add Product">
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: mainImage }} />
-        <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
-          <Icon style={{ color: "white" }} name="camera" />
-        </TouchableOpacity>
-      </View>
+    <ScrollView>
+      <FormContainer title="Add Product">
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{ uri: mainImage }} />
+          <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
+            <Icon style={{ color: "white" }} name="camera" />
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.label}>
-        <Text>Brand</Text>
-      </View>
-      <Input
-        placeholder="Brand"
-        name="brand"
-        id="brand"
-        value={brand}
-        onChangeText={(text) => setBrand(text)}
-      />
+        <View style={styles.label}>
+          <Text>Brand</Text>
+        </View>
+        <Input
+          placeholder="Brand"
+          name="brand"
+          id="brand"
+          value={brand}
+          onChangeText={(text) => setBrand(text)}
+        />
 
-      <View style={styles.label}>
-        <Text>Name</Text>
-      </View>
-      <Input
-        placeholder="Name"
-        name="name"
-        id="name"
-        value={name}
-        onChangeText={(text) => setName(text)}
-      />
+        <View style={styles.label}>
+          <Text>Name</Text>
+        </View>
+        <Input
+          placeholder="Name"
+          name="name"
+          id="name"
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
 
-      <View style={styles.label}>
-        <Text>Price</Text>
-      </View>
-      <Input
-        placeholder="Price"
-        name="price"
-        id="price"
-        keyboardType={"numeric"}
-        value={price}
-        onChangeText={(text) => setPrice(text)}
-      />
+        <View style={styles.label}>
+          <Text>Price</Text>
+        </View>
+        <Input
+          placeholder="Price"
+          name="price"
+          id="price"
+          keyboardType={"numeric"}
+          value={price}
+          onChangeText={(text) => setPrice(text)}
+        />
 
-      <View style={styles.label}>
-        <Text>Count in stock</Text>
-      </View>
-      <Input
-        placeholder="Stock"
-        name="stock"
-        id="stock"
-        keyboardType={"numeric"}
-        value={countInStock}
-        onChangeText={(text) => setCountInStock(text)}
-      />
+        <View style={styles.label}>
+          <Text>Count in stock</Text>
+        </View>
+        <Input
+          placeholder="Stock"
+          name="stock"
+          id="stock"
+          keyboardType={"numeric"}
+          value={countInStock}
+          onChangeText={(text) => setCountInStock(text)}
+        />
 
-      <View style={styles.label}>
-        <Text>Description</Text>
-      </View>
-      <Input
-        placeholder="Description"
-        name="description"
-        id="description"
-        value={description}
-        onChangeText={(text) => setDescription(text)}
-      />
+        <View style={styles.label}>
+          <Text>Description</Text>
+        </View>
+        <Input
+          placeholder="Description"
+          name="description"
+          id="description"
+          value={description}
+          onChangeText={(text) => setDescription(text)}
+        />
 
-      <Dropdown
-        placeholder={{
-          label: "Select your Category",
-          value: null,
-          color: "red",
-        }}
-        onValueChange={(e) => [setPickerValue(e), setCategory(e)]}
-        items={categoryItems}
-        value={pickerValue}
-      />
-      {err ? <Error message={err} /> : null}
-      <View style={styles.buttonContainer}>
-        <EasyButton large primary onPress={() => addProduct()}>
-          <Text style={styles.buttonText}>Confirm</Text>
-        </EasyButton>
-      </View>
-    </FormContainer>
+        <Dropdown
+          placeholder={{
+            label: "Select your Category",
+            value: null,
+            color: "red",
+          }}
+          onValueChange={(e) => [setPickerValue(e), setCategory(e)]}
+          items={categoryItems}
+          value={pickerValue}
+        />
+        {err ? <Error message={err} /> : null}
+        <View style={styles.buttonContainer}>
+          <EasyButton large primary onPress={() => addProduct()}>
+            <Text style={styles.buttonText}>Confirm</Text>
+          </EasyButton>
+        </View>
+      </FormContainer>
+    </ScrollView>
   );
 };
 

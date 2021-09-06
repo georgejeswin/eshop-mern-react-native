@@ -1,13 +1,14 @@
 import React, { useEffect, useContext, useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
 import Error from "../../Shared/Error";
 //Context
 import AuthGlobal from "../../Context/store/AuthGlobal";
 import { loginUser } from "../../Context/actions/auth.actions";
-import EasyButton from "../../Shared/StyleComponents/EasyButton";
 import { StackActions } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
 const Login = (props) => {
   const context = useContext(AuthGlobal);
@@ -41,39 +42,60 @@ const Login = (props) => {
   };
 
   return (
-    <FormContainer title={"Login"}>
-      <Input
-        placeholder={"Enter Email"}
-        name={"email"}
-        id={"email"}
-        value={email}
-        onChangeText={(text) => setEmail(text.toLowerCase().trim())}
-      />
-      <Input
-        placeholder={"Enter Password"}
-        name={"password"}
-        id={"password"}
-        secureTextEntry={true}
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
-      <View style={styles.buttonGroup}>
-        {error ? <Error message={error} /> : null}
-        <EasyButton large primary onPress={() => handleSubmit()}>
+    <ScrollView>
+      <FormContainer title={"Login"}>
+        <Image
+          style={{ width: 300, height: 300 }}
+          resizeMode="contain"
+          source={{
+            uri: "https://www.payway.com/wp-content/uploads/header-img-10-mobile.png",
+          }}
+        />
+        <Input
+          placeholder={"Enter Email"}
+          name={"email"}
+          id={"email"}
+          value={email}
+          onChangeText={(text) => setEmail(text.toLowerCase().trim())}
+        />
+        <Input
+          placeholder={"Enter Password"}
+          name={"password"}
+          id={"password"}
+          secureTextEntry={true}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+        />
+        <View style={styles.buttonGroup}>
+          {error ? <Error message={error} /> : null}
+          <LinearGradient
+            colors={["#a0b5d1", "#7d80e4"]}
+            style={styles.registerButton}
+          >
+            <TouchableOpacity onPress={() => handleSubmit()}>
+              <Text style={{ color: "#FFF", fontWeight: "bold", fontSize: 14 }}>
+                Login
+              </Text>
+            </TouchableOpacity>
+          </LinearGradient>
+          {/* <EasyButton large primary onPress={() => handleSubmit()}>
           <Text style={{ color: "#FFF", fontWeight: "bold" }}>Login</Text>
-        </EasyButton>
-      </View>
-      <View style={[{ marginTop: 40 }, styles.buttonGroup]}>
-        <Text style={styles.middleText}>Don't have account yet?</Text>
-        <EasyButton
-          large
-          secondary
-          onPress={() => props.navigation.navigate("Register")}
-        >
-          <Text style={{ color: "#FFF", fontWeight: "bold" }}>Register</Text>
-        </EasyButton>
-      </View>
-    </FormContainer>
+        </EasyButton> */}
+        </View>
+        <View style={[{ marginTop: 40 }, styles.buttonGroup]}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("Register")}
+          >
+            <Text style={styles.middleText}>
+              Don't have account yet?? &nbsp;
+              <Text style={{ color: "gray", fontWeight: "bold" }}>
+                Register
+              </Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </FormContainer>
+    </ScrollView>
   );
 };
 
@@ -81,10 +103,20 @@ const styles = StyleSheet.create({
   buttonGroup: {
     width: "80%",
     alignItems: "center",
+    marginTop: 30,
   },
   middleText: {
     marginBottom: 20,
     alignSelf: "center",
+    color: "darkgray",
+  },
+  registerButton: {
+    width: "90%",
+    borderRadius: 20,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
   },
 });
 

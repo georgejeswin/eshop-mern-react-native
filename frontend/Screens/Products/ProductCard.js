@@ -30,12 +30,12 @@ const ProductCard = (props) => {
             : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png",
         }}
       />
-      <View style={styles.card}></View>
+      {/* <View style={styles.card}></View> */}
       <Text style={styles.title}>
         {name.length > 15 ? name.substring(0, 15 - 3) + "..." : name}
       </Text>
       <Text style={styles.price}>₹{price}</Text>
-      {countInStock > 0 ? (
+      {/* {countInStock > 0 ? (
         <View style={{ marginBottom: 60 }}>
           <EasyButton
             primary
@@ -55,7 +55,7 @@ const ProductCard = (props) => {
         </View>
       ) : (
         <Text style={{ marginTop: 20 }}>Currently Unavailable</Text>
-      )}
+      )} */}
     </View>
   );
 };
@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => {
 const styles = StyleSheet.create({
   container: {
     width: width / 2 - 20,
-    height: width / 1.7,
+    height: width / 1.5,
     padding: 10,
     borderRadius: 10,
     marginTop: 55,
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     width: width / 2 - 20 - 10,
     height: width / 2 - 20 - 30,
     backgroundColor: "transparent",
-    position: "absolute",
-    top: -45,
+    // position: "absolute",
+    top: 15,
   },
   card: {
     marginBottom: 10,
@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 14,
-    textAlign: "center",
+    // textAlign: "center",
+    marginTop: 20,
   },
   price: {
     fontSize: 20,

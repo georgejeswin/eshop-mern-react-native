@@ -7,7 +7,7 @@ import {
   Button,
   ScrollView,
 } from "react-native";
-import { Left, Right, Container, H1 } from "native-base";
+import { Left, Right, Container, H1, H2 } from "native-base";
 
 import { connect } from "react-redux";
 import * as actions from "../../Redux/Actions/cartActions";
@@ -15,6 +15,7 @@ import { hostIP } from "../../assets/common/baseUrl";
 import Toast from "react-native-toast-message";
 import EasyButton from "../../Shared/StyleComponents/EasyButton";
 import TrafficLight from "../../Shared/StyleComponents/TrafficLight";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const SingleProduct = (props) => {
   const [item, setItem] = useState(props.route.params.item);
@@ -55,43 +56,41 @@ const SingleProduct = (props) => {
             style={styles.image}
           />
         </View>
-        <View style={styles.contentContainer}>
-          <H1 style={styles.contentHeader}>{item.name}</H1>
-          <Text style={styles.contentText}>{item.brand}</Text>
-        </View>
-        <View style={styles.availabilityContainer}>
-          <View style={styles.availability}>
-            <Text style={{ marginRight: 10 }}>
-              Availability: {availabilityText}
-            </Text>
-            {availability}
+        <View style={styles.card}>
+          <View style={styles.contentContainer}>
+            <H1 style={styles.contentHeader}>{item.name}</H1>
+            <H2 style={styles.price}>₹{item.price}</H2>
+
+            <Text style={styles.contentText}>{item.brand}</Text>
           </View>
-          <Text>{item.description}</Text>
-          {/* <Text>{item.image}</Text> */}
+          <View style={styles.availabilityContainer}>
+            <View style={styles.availability}>
+              <Text style={{ marginRight: 10 }}>
+                Availability: {availabilityText}
+              </Text>
+              {availability}
+            </View>
+            <Text style={{ width: 400 }}>{item.description}</Text>
+            {/* <Text>{item.image}</Text> */}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                props.addItemToCart(item),
+                  Toast.show({
+                    topOffset: 10,
+                    type: "success",
+                    text1: `${item.name} added to card`,
+                    text2: "GO to your card to compleat order",
+                  });
+              }}
+            >
+              <Text style={{ color: "#FFF", fontWeight: "bold", fontSize: 17 }}>
+                Add
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
-      <View style={styles.bottomContainer}>
-        <Left>
-          <Text style={styles.price}>₹{item.price}</Text>
-        </Left>
-        <Right>
-          <EasyButton
-            primary
-            medium
-            onPress={() => {
-              props.addItemToCart(item),
-                Toast.show({
-                  topOffset: 60,
-                  type: "success",
-                  text1: `${item.name} added to card`,
-                  text2: "GO to your card to compleat order",
-                });
-            }}
-          >
-            <Text style={{ color: "#FFF", fontWeight: "bold" }}>Add</Text>
-          </EasyButton>
-        </Right>
-      </View>
     </Container>
   );
 };
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 250,
+    height: 450,
   },
   contentContainer: {
     marginTop: 20,
@@ -123,6 +122,7 @@ const styles = StyleSheet.create({
   },
   contentHeader: {
     fontWeight: "bold",
+    fontSize: 30,
     marginBottom: 20,
   },
   contentText: {
@@ -131,23 +131,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   bottomContainer: {
-    flexDirection: "row",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
     backgroundColor: "white",
   },
   price: {
     fontSize: 24,
-    margin: 20,
-    color: "red",
-  },
-  availabilityContainer: {
-    marginBottom: 20,
-    alignItems: "center",
-  },
-  availability: {
-    flexDirection: "row",
     marginBottom: 10,
   },
   availabilityContainer: {
@@ -157,6 +144,33 @@ const styles = StyleSheet.create({
   availability: {
     flexDirection: "row",
     marginBottom: 10,
+  },
+  availabilityContainer: {
+    marginBottom: 20,
+    alignItems: "center",
+  },
+  availability: {
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+  card: {
+    // borderTopRightRadius: 60,
+    // borderTopLeftRadius: 60,
+    borderRadius: 60,
+    marginHorizontal: 16,
+    marginTop: 40,
+    flex: 1,
+    backgroundColor: "gainsboro",
+  },
+  button: {
+    borderRadius: 19,
+    marginTop: 20,
+    width: 300,
+    height: 40,
+    backgroundColor: "green",
+    padding: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 export default connect(null, mapDispatchToProps)(SingleProduct);

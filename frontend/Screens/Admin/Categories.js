@@ -95,7 +95,7 @@ const Categories = (props) => {
 
   return (
     <View style={{ position: "relative", height: "100%" }}>
-      <View style={{ marginBottom: 60 }}>
+      {/* <View style={{ marginBottom: 60 }}>
         <FlatList
           data={categories}
           renderItem={({ item, index }) => (
@@ -103,7 +103,7 @@ const Categories = (props) => {
           )}
           keyExtractor={(item) => item.id}
         />
-      </View>
+      </View> */}
       <View style={styles.bottomBar}>
         <View>
           <Text>Add Category</Text>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     position: "absolute",
-    bottom: 0,
+    bottom: 30,
     left: 0,
   },
   input: {

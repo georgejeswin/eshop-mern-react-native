@@ -22,7 +22,18 @@ const Main = () => {
       tabBarOptions={{
         keyboardHidesTabBar: true,
         showLabel: false,
-        activeTintColor: "#e91e63",
+        activeTintColor: "#a283e7",
+        style: {
+          // position: "absolute",
+          height: 70,
+          // backgroundColor: "#0f0f0f",
+          borderTopLeftRadius: 70,
+          borderTopRightRadius: 70,
+          borderBottomLeftRadius: 70,
+          borderBottomRightRadius: 70,
+          marginHorizontal: 30,
+          bottom: 20,
+        },
       }}
     >
       <Tab.Screen
@@ -30,7 +41,7 @@ const Main = () => {
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="home" color={color} size={30} />
+            <Icon name="home" color={color} size={28} />
           ),
         }}
       />
@@ -40,7 +51,7 @@ const Main = () => {
         options={{
           tabBarIcon: ({ color }) => (
             <View>
-              <Icon name="shopping-cart" color={color} size={30} />
+              <Icon name="shopping-cart" color={color} size={28} />
               <CartIcon />
             </View>
           ),
@@ -53,7 +64,7 @@ const Main = () => {
           options={{
             tabBarIcon: ({ color }) => (
               <View>
-                <Icon name="cog" color={color} size={30} />
+                <Icon name="cog" color={color} size={28} />
               </View>
             ),
           }}
@@ -66,7 +77,7 @@ const Main = () => {
         options={{
           tabBarIcon: ({ color }) => (
             <View>
-              <Icon name="user" color={color} size={30} />
+              <Icon name="user" color={color} size={28} />
             </View>
           ),
         }}

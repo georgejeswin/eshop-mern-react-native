@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import { ListItem, Badge, Text } from "native-base";
+import { ListItem, Badge, Text, Image } from "native-base";
 
 const CategoryFilter = (props) => {
   return (
@@ -26,7 +26,7 @@ const CategoryFilter = (props) => {
             <Text style={{ color: "white" }}>All</Text>
           </Badge>
         </TouchableOpacity>
-        
+
         {props.categories.map((item) => (
           <TouchableOpacity
             key={item._id}
@@ -57,6 +57,8 @@ const styles = StyleSheet.create({
   center: {
     justifyContent: "center",
     alignItems: "center",
+    height: 30,
+    minWidth: 50,
   },
   active: {
     backgroundColor: "#03bafc",

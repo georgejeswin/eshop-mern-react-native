@@ -7,7 +7,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import axios from "axios";
 import { baseURL } from "../../assets/common/baseUrl";
 import Toast from "react-native-toast-message";
-import EasyButton from "../../Shared/StyleComponents/EasyButton";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Register = (props) => {
   const [email, setEmail] = useState("");
@@ -59,8 +60,9 @@ const Register = (props) => {
       viewIsInsideTabBar={true}
       extraHeight={200}
       enableOnAndroid={true}
+      style={{ marginTop: 50 }}
     >
-      <FormContainer title={"Register"}>
+      <FormContainer title={"Register"} style={styles.signupContainer}>
         <Input
           placeholder={"Email"}
           name={"email"}
@@ -95,27 +97,36 @@ const Register = (props) => {
         <View>{error ? <Error message={error} /> : null}</View>
 
         <View style={[{ marginTop: 40 }, styles.buttonGroup]}>
-          <EasyButton large primary onPress={() => register()}>
-            <Text style={{ color: "#FFF", fontWeight: "bold" }}>Register</Text>
-          </EasyButton>
+          <LinearGradient
+            colors={["#3393E4", "#715886"]}
+            style={styles.registerButton}
+          >
+            <TouchableOpacity onPress={() => register()}>
+              <Text style={{ color: "#FFF", fontWeight: "bold", fontSize: 14 }}>
+                Register
+              </Text>
+            </TouchableOpacity>
+          </LinearGradient>
         </View>
         <View style={[{ marginTop: 40 }, styles.buttonGroup]}>
-          <EasyButton
-            large
-            secondary
-            onPress={() => props.navigation.navigate("Login")}
-          >
-            <Text style={{ color: "#FFF", fontWeight: "bold" }}>
-              {" "}
-              Back to login
+          <TouchableOpacity onPress={() => props.navigation.navigate("Login")}>
+            <Text style={{ color: "darkgrey", fontWeight: "bold" }}>
+              Already have an account?? &nbsp;{" "}
+              <Text style={{ color: "gray" }}>Login</Text>
             </Text>
-          </EasyButton>
+          </TouchableOpacity>
         </View>
       </FormContainer>
     </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({
+  signupContainer: {
+    height: "100vh",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
   buttonGroup: {
     width: "80%",
     alignItems: "center",
@@ -123,6 +134,15 @@ const styles = StyleSheet.create({
   middleText: {
     marginBottom: 20,
     alignSelf: "center",
+    color: "gainsboro",
+  },
+  registerButton: {
+    width: "90%",
+    borderRadius: 20,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
   },
 });
 export default Register;
