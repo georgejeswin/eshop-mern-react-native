@@ -94,37 +94,94 @@ router.post("/", uploadOptions.single("image"), async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  try {
-    const product = await ProductModel.findByIdAndUpdate(
-      req.params.id,
-      {
-        name: req.body.name,
-        description: req.body.description,
-        richDescription: req.body.richDescription,
-        image: req.body.image,
-        images: req.body.images,
-        brand: req.body.images,
-        price: req.body.price,
-        category: req.body.category,
-        countInStock: req.body.countInStock,
-        rating: req.body.rating,
-        numReviews: req.body.numReviews,
-        isFeatured: req.body.isFeatured,
-        dateCreated: req.body.dateCreated,
-      },
-      { new: true }
-    );
-    if (!product) {
-      return res.status(500).send("Cannot update");
-    }
-    res.status(201).send(product);
-  } catch (error) {
-    res.status(404).json({
-      error: error.message,
-    });
+// router.put("/:id", async (req, res) => {
+//   try {
+//     console.log(req);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+router.put("/:id", uploadOptions.single("image"), async (request, response) => {
+  if (!mongoose.isValidObjectId(request.params.id)) {
+    return response.status(400).send("Invalid product ID");
   }
+  const category = await Category.findById(request.body.category);
+  if (!category) return response.status(400).send("Invalid Category");
+
+  const product = await Product.findById(request.params.id);
+  if (!product) return response.status(400).send("Invalid Category");
+
+  const file = request.file;
+  let imagepath;
+
+  if (file) {
+    const fileName = file.filename;
+    // const basePath = `${request.protocol}://${request.get(
+    //   "host"
+    // )}/public/uploads/`;
+    const basePath = `public/uploads/`;
+    imagepath = `${basePath}${fileName}`;
+  } else {
+    imagepath = product.image;
+  }
+
+  const updatedProduct = await Product.findByIdAndUpdate(
+    request.params.id,
+    {
+      name: request.body.name,
+      description: request.body.description,
+      richDescription: request.body.richDescription,
+      image: imagepath,
+      brand: request.body.brand,
+      price: request.body.price,
+      category: request.body.category,
+      countInStock: request.body.countInStock,
+      rating: request.body.rating,
+      numReviews: request.body.numReviews,
+      isFeatured: request.body.isFeatured,
+    },
+    { new: true }
+  );
+
+  if (!updatedProduct)
+    return response.status(500).send("The Product cannot be Update!");
+
+  response.send(updatedProduct);
 });
+// router.put("/:id", async (req, res) => {
+//   try {
+//     const file = req.file;
+//     if (!file) return res.status(400).send("No image in the request ");
+
+//     const product = await ProductModel.findByIdAndUpdate(
+//       req.params.id,
+//       {
+//         name: req.body.name,
+//         description: req.body.description,
+//         richDescription: req.body.richDescription,
+//         image: req.file.filename,
+//         images: req.body.images,
+//         brand: req.body.images,
+//         price: req.body.price,
+//         category: req.body.category,
+//         countInStock: req.body.countInStock,
+//         rating: req.body.rating,
+//         numReviews: req.body.numReviews,
+//         isFeatured: req.body.isFeatured,
+//         dateCreated: req.body.dateCreated,
+//       },
+//       { new: true }
+//     );
+//     if (!product) {
+//       return res.status(500).send("Cannot update");
+//     }
+//     res.status(201).send(product);
+//   } catch (error) {
+//     res.status(404).json({
+//       error: error.message,
+//     });
+//   }
+// });
 
 router.delete("/:id", (req, res) => {
   ProductModel.findByIdAndRemove(req.params.id)
