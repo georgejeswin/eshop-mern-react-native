@@ -1,19 +1,8 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  Image,
-  Text,
-  Button,
-} from "react-native";
+import { StyleSheet, View, Dimensions, Image, Text } from "react-native";
 
 import { connect } from "react-redux";
 import * as actions from "../../Redux/Actions/cartActions";
-import Toast from "react-native-toast-message";
-import EasyButton from "../../Shared/StyleComponents/EasyButton";
-
-import { hostIP } from "../../assets/common/baseUrl";
 
 var { width } = Dimensions.get("window");
 const ProductCard = (props) => {

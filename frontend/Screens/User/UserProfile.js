@@ -10,6 +10,8 @@ import EasyButton from "../../Shared/StyleComponents/EasyButton";
 import AuthGlobal from "../../Context/store/AuthGlobal";
 import { logoutUser } from "../../Context/actions/auth.actions";
 import OrderCard from "../../Shared/OrderCard";
+import { LinearGradient } from "expo-linear-gradient";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const UserProfile = (props) => {
   const context = useContext(AuthGlobal);
@@ -72,19 +74,26 @@ const UserProfile = (props) => {
           </Text>
         </View>
         <View style={{ marginTop: 80 }}>
-          <EasyButton
-            large
-            secondary
-            onPress={() => [
-              AsyncStorage.removeItem("jwt"),
-              logoutUser(context.dispatch),
-            ]}
+          <LinearGradient
+            colors={["#a0b5d1", "#7d80e4"]}
+            style={styles.registerButton}
           >
-            <Text style={{ color: "#FFF", fontWeight: "bold" }}>Sign out</Text>
-          </EasyButton>
+            <TouchableOpacity
+              onPress={() => [
+                AsyncStorage.removeItem("jwt"),
+                logoutUser(context.dispatch),
+              ]}
+            >
+              <Text style={{ color: "#FFF", fontWeight: "bold", fontSize: 14 }}>
+                Logout
+              </Text>
+            </TouchableOpacity>
+          </LinearGradient>
         </View>
         <View>
-          <Text style={{ fontSize: 20 }}>My Orders</Text>
+          <Text style={{ fontSize: 20, marginTop: 50, fontWeight: "bold" }}>
+            My Orders
+          </Text>
           <View style={styles.order}>
             {orders ? (
               orders.map((x) => {
@@ -115,6 +124,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: "center",
     marginBottom: 60,
+  },
+  registerButton: {
+    width: 300,
+    borderRadius: 20,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
   },
 });
 export default UserProfile;

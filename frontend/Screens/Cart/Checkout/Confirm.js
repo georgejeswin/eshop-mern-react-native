@@ -16,6 +16,7 @@ import * as actions from "../../../Redux/Actions/cartActions";
 import { baseURL, hostIP } from "../../../assets/common/baseUrl";
 import Toast from "react-native-toast-message";
 import axios from "axios";
+import { TouchableOpacity } from "react-native-gesture-handler";
 var { height, width } = Dimensions.get("window");
 const Confirm = (props) => {
   const finalOrder = props.route.params;
@@ -88,7 +89,20 @@ const Confirm = (props) => {
           </View>
         ) : null}
         <View style={{ alignItems: "center", margin: 20 }}>
-          <Button title={"Place order"} onPress={confirmOrder} />
+          <TouchableOpacity
+            onPress={confirmOrder}
+            style={{
+              backgroundColor: "#1e90ff",
+              width: 200,
+              height: 60,
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 30,
+              marginTop: 40,
+            }}
+          >
+            <Text>Checkout</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

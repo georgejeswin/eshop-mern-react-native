@@ -54,41 +54,58 @@ const Cart = (props) => {
               <Text style={styles.price}>₹{total}</Text>
             </Left>
             <Right>
-              <EasyButton
-                medium
-                danger
+              <TouchableOpacity
                 onPress={() => {
                   props.clearCart();
                 }}
+                style={{
+                  backgroundColor: "#e34234",
+                  width: 120,
+                  height: 50,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 30,
+                  marginTop: 40,
+                }}
               >
-                <Text style={{ color: "#FFF", fontWeight: "bold" }}>Clear</Text>
-              </EasyButton>
+                <Text>Clear</Text>
+              </TouchableOpacity>
             </Right>
             <Right>
               {context.stateUser.isAuthenticated ? (
-                <EasyButton
-                  medium
-                  primary
+                <TouchableOpacity
                   onPress={() => {
                     props.navigation.navigate("Checkout");
                   }}
+                  style={{
+                    backgroundColor: "#32cd32",
+                    width: 120,
+                    height: 50,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 30,
+                    marginTop: 40,
+                  }}
                 >
-                  <Text style={{ color: "#FFF", fontWeight: "bold" }}>
-                    Checkout
-                  </Text>
-                </EasyButton>
+                  <Text>Checkout</Text>
+                </TouchableOpacity>
               ) : (
-                <EasyButton
-                  medium
-                  secondary
+                <TouchableOpacity
                   onPress={() => {
                     props.navigation.navigate("Login");
                   }}
+                  style={{
+                    backgroundColor: "#1e90ff",
+                    width: 120,
+                    height: 50,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 30,
+                    marginTop: 40,
+                  }}
                 >
-                  <Text style={{ color: "#FFF", fontWeight: "bold" }}>
-                    Login
-                  </Text>
-                </EasyButton>
+                  <Text>Login</Text>
+                </TouchableOpacity>
               )}
             </Right>
           </View>
@@ -135,16 +152,18 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     flexDirection: "row",
-    position: "absolute",
-    bottom: 0,
+    // position: "absolute",
+    paddingBottom: 50,
     left: 0,
     backgroundColor: "white",
     elevation: 20,
+    paddingHorizontal: 15,
   },
   price: {
-    fontSize: 18,
+    fontSize: 24,
     margin: 20,
-    color: "red",
+    marginTop: 50,
+    fontWeight: "bold",
   },
   hiddenContainer: {
     flex: 1,

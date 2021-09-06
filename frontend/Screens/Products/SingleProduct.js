@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginTop: 40,
     flex: 1,
+    padding: 20,
     backgroundColor: "gainsboro",
   },
   button: {

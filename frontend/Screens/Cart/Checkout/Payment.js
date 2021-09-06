@@ -16,6 +16,7 @@ import {
   Body,
   Title,
 } from "native-base";
+import { TouchableOpacity } from "react-native-gesture-handler";
 // import RNPickerSelect from "react-native-picker-select";
 const methods = [
   { name: "Cash on Delivery", value: 1 },
@@ -73,7 +74,20 @@ const Payment = (props) => {
           />
         ) : null}
         <View style={{ marginTop: 60, alignSelf: "center" }}>
-          <Button title={"Confirm"} onPress={() => paymentConfirm()} />
+          <TouchableOpacity
+            onPress={() => paymentConfirm()}
+            style={{
+              backgroundColor: "#1e90ff",
+              width: 200,
+              height: 60,
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 30,
+              marginTop: 40,
+            }}
+          >
+            <Text>Checkout</Text>
+          </TouchableOpacity>
         </View>
       </Content>
     </Container>

@@ -21,6 +21,7 @@ import Dropdown from "../../../Components/Dropdown";
 
 import { connect } from "react-redux";
 import Toast from "react-native-toast-message";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Checkout = (props) => {
   const context = useContext(AuthGlobal);
@@ -99,7 +100,7 @@ const Checkout = (props) => {
             <Title style={{ color: "black" }}>Shipping Address</Title>
           </Body>
         </Header>
-        <Content>
+        <Content style={{ backgroundColor: "#141414" }}>
           <FormContainer>
             <Input
               placeholder={"Phone"}
@@ -166,7 +167,20 @@ const Checkout = (props) => {
           </Picker>
         </Item> */}
             <View style={{ width: "80%", alignItems: "center" }}>
-              <Button title="Confirm" onPress={() => checkOut()} />
+              <TouchableOpacity
+                onPress={() => checkOut()}
+                style={{
+                  backgroundColor: "#1e90ff",
+                  width: 200,
+                  height: 60,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 30,
+                  marginTop: 40,
+                }}
+              >
+                <Text>Checkout</Text>
+              </TouchableOpacity>
             </View>
           </FormContainer>
         </Content>
