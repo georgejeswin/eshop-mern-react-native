@@ -1,16 +1,6 @@
 import React from "react";
-
-import { View, StyleSheet, Dimensions, ScrollView, Button } from "react-native";
-import {
-  Text,
-  Left,
-  Right,
-  ListItem,
-  Thumbnail,
-  Body,
-  Title,
-} from "native-base";
-
+import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { Text, Left, Right, ListItem, Thumbnail, Body } from "native-base";
 import { connect } from "react-redux";
 import * as actions from "../../../Redux/Actions/cartActions";
 import { baseURL, hostIP } from "../../../assets/common/baseUrl";
@@ -20,36 +10,45 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 var { height, width } = Dimensions.get("window");
 const Confirm = (props) => {
   const finalOrder = props.route.params;
+  const addressTrue = props.route.params;
   // if (finalOrder.order.order == "undefined") {
   //   props.navigation.navigate("Checkout");
   // }
   const confirmOrder = () => {
-    const order = finalOrder.order.order;
-
-    axios
-      .post(`${baseURL}orders`, order)
-      .then((res) => {
-        if (res.status == 200 || res.status == 201) {
+    if (addressTrue) {
+      const order = finalOrder.order.order;
+      axios
+        .post(`${baseURL}orders`, order)
+        .then((res) => {
+          if (res.status == 200 || res.status == 201) {
+            Toast.show({
+              topOffset: 60,
+              type: "success",
+              text1: "Order Completed",
+              text2: "",
+            });
+            setTimeout(() => {
+              props.clearCart();
+              props.navigation.navigate("Cart");
+            }, 500);
+          }
+        })
+        .catch((error) => {
           Toast.show({
             topOffset: 60,
-            type: "success",
-            text1: "Order Completed",
-            text2: "",
+            type: "error",
+            text1: "Something went wrong",
+            text2: "Please try again",
           });
-          setTimeout(() => {
-            props.clearCart();
-            props.navigation.navigate("Cart");
-          }, 500);
-        }
-      })
-      .catch((error) => {
-        Toast.show({
-          topOffset: 60,
-          type: "error",
-          text1: "Something went wrong",
-          text2: "Please try again",
         });
+    } else {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: "Please Provide correct details to Checkout",
+        text2: "",
       });
+    }
   };
 
   return (

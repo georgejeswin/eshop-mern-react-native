@@ -1,31 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Text, View, Button, Platform, StyleSheet } from "react-native";
-import {
-  Item,
-  Picker,
-  Header,
-  Body,
-  Title,
-  Content,
-  Container,
-} from "native-base";
-
-import Icon from "react-native-vector-icons/FontAwesome";
+import { Text, View, StyleSheet } from "react-native";
+import { Header, Body, Title, Content, Container } from "native-base";
 import FormContainer from "../../../Shared/Form/FormContainer";
 import Input from "../../../Shared/Form/Input";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const countries = require("../../../assets/data/countries.json");
 import AuthGlobal from "../../../Context/store/AuthGlobal";
-
 import Dropdown from "../../../Components/Dropdown";
-
 import { connect } from "react-redux";
 import Toast from "react-native-toast-message";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Checkout = (props) => {
   const context = useContext(AuthGlobal);
-
   const [orderItems, setOrderItems] = useState();
   const [address, setAddress] = useState();
   const [address2, setAddress2] = useState();
@@ -68,7 +55,6 @@ const Checkout = (props) => {
       status: 3,
       user,
     };
-    // console.log(order);
     if (
       order.city == undefined ||
       order.country == undefined ||
@@ -84,7 +70,10 @@ const Checkout = (props) => {
         text2: "",
       });
     } else {
-      props.navigation.navigate("Payment", { order: order });
+      props.navigation.navigate("Payment", {
+        order: order,
+        addressTrue: true,
+      });
     }
   };
 
