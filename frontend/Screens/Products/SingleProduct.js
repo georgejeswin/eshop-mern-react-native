@@ -70,7 +70,14 @@ const SingleProduct = (props) => {
               </Text>
               {availability}
             </View>
-            <Text style={{ width: 400 }}>{item.description}</Text>
+            <Text
+              style={{
+                width: 400,
+                textAlign: "center",
+              }}
+            >
+              {item.description}
+            </Text>
             {/* <Text>{item.image}</Text> */}
             <TouchableOpacity
               style={styles.button}
@@ -124,6 +131,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 30,
     marginBottom: 20,
+    textAlign: "center",
   },
   contentText: {
     fontSize: 18,
