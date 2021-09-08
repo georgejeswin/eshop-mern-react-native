@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "e-commerceApp",
-    "slug": "e-commerceApp",
+    "name": "blix",
+    "slug": "blix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -24,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.sagarkhole.ecommercemobileapp"
+      "package": "com.jeswingeorge.blixecommerceapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
