@@ -56,6 +56,7 @@ const ProductForm = (props) => {
       setPrice(props.route.params.item.price.toString());
       setDescription(props.route.params.item.description);
       setMainImage(`${hostIP}${props.route.params.item.image}`);
+      console.log(`${hostIP}${props.route.params.item.image}`);
       setImage(props.route.params.item.image);
       setPickerValue(props.route.params.item.category._id);
       setCountInStock(props.route.params.item.countInStock.toString());

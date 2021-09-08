@@ -100,7 +100,7 @@ const Checkout = (props) => {
             <Title style={{ color: "black" }}>Shipping Address</Title>
           </Body>
         </Header>
-        <Content style={{ backgroundColor: "#141414" }}>
+        <Content style={{ backgroundColor: "#FFFAFA" }}>
           <FormContainer>
             <Input
               placeholder={"Phone"}
@@ -108,6 +108,7 @@ const Checkout = (props) => {
               value={phone}
               keyboardType={"numeric"}
               onChangeText={(text) => setPhone(text)}
+              style={styles.input}
             />
 
             <Input
@@ -205,6 +206,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "gray",
     margin: 10,
+  },
+  input: {
+    backgroundColor: "green",
   },
 });
 
