@@ -108,7 +108,7 @@ router.put("/:id", uploadOptions.single("image"), async (request, response) => {
   const category = await Category.findById(request.body.category);
   if (!category) return response.status(400).send("Invalid Category");
 
-  const product = await Product.findById(request.params.id);
+  const product = await ProductModel.findById(request.params.id);
   if (!product) return response.status(400).send("Invalid Category");
 
   const file = request.file;
@@ -117,15 +117,17 @@ router.put("/:id", uploadOptions.single("image"), async (request, response) => {
   if (file) {
     const fileName = file.filename;
     // const basePath = `${request.protocol}://${request.get(
-    //   "host"
+    //   "host"s
     // )}/public/uploads/`;
-    const basePath = `public/uploads/`;
+    const basePath = `${request.protocol}://${request.get(
+      "host"
+    )}/public/uploads/`;
     imagepath = `${basePath}${fileName}`;
   } else {
     imagepath = product.image;
   }
 
-  const updatedProduct = await Product.findByIdAndUpdate(
+  const updatedProduct = await ProductModel.findByIdAndUpdate(
     request.params.id,
     {
       name: request.body.name,
