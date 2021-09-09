@@ -7,7 +7,7 @@ import * as actions from "../../Redux/Actions/cartActions";
 var { width } = Dimensions.get("window");
 const ProductCard = (props) => {
   const { name, price, image, countInStock } = props;
-  console.log(image);
+  // console.log(image);
   return (
     <View style={styles.container}>
       <Image
