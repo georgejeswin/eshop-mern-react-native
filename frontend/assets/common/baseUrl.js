@@ -1,4 +1,5 @@
 const hostIP = "https://eshop-mernrn.herokuapp.com";
+// const hostIP = "http://localhost:5000";
 let baseURL = `${hostIP}/api/v1/`; //API IP address or domain
 
 // import { Platform } from "react-native";
